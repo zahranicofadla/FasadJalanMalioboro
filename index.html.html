@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Cesium 3D Tiles Viewer</title>
+
+    <!-- CesiumJS CDN -->
+    <script src="https://cesium.com/downloads/cesiumjs/releases/1.114/Build/Cesium/Cesium.js"></script>
+    <link href="https://cesium.com/downloads/cesiumjs/releases/1.114/Build/Cesium/Widgets/widgets.css" rel="stylesheet">
+
+    <style>
+        html, body, #cesiumContainer {
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Container Cesium -->
+    <div id="cesiumContainer"></div>
+
+    <script>
+        // TOKEN Cesium ion (ganti dengan token kamu)
+        Cesium.Ion.defaultAccessToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiI3Y2YxMWQ3Ni1jZmUwLTRmY2MtYmZjMS05NjQ2ZWNiMWZjODYiLCJpZCI6MzcwNDc0LCJpYXQiOjE3NjYxNjc5Nzd9.p2FA1ISl8WgI3TImH-m9wr8GU7dLrm-yxTDxwB5pn38';
+
+        // Inisialisasi Viewer
+        const viewer = new Cesium.Viewer('cesiumContainer', {
+            animation: true,
+            timeline: true,
+            baseLayerPicker: true,
+            terrain: Cesium.Terrain.fromWorldTerrain()
+        });
+
+        // Async function untuk load 3D Tiles
+        (async function () {
+
+            // Load 3D Tiles dari Cesium ion
+            const tileset = viewer.scene.primitives.add(
+                await Cesium.Cesium3DTileset.fromIonAssetId(4258332)
+            );
+
+            // Zoom ke objek 3D
+            viewer.zoomTo(tileset);
+
+        })();
+    </script>
+</body>
+</html>
